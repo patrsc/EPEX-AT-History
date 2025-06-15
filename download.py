@@ -15,8 +15,7 @@ TIMEZONE = "Europe/Vienna"
 def main():
     """Download single day data if not yet existing (next day if no YYYY-DD-MM date provided)."""
     if len(sys.argv) > 1:
-        day_start = datetime.strptime(sys.argv[1], '%Y-%m-%d')
-        day_start.replace(tzinfo=ZoneInfo(TIMEZONE))
+        day_start = day_from_string(sys.argv[1])
     else:
         t = get_current_local_time()
         today_start = get_day_start(t)
@@ -67,6 +66,11 @@ def to_unix_timestamp(dt: datetime) -> int:
     return int(dt.timestamp() * 1000)
 
 
+def from_unix_timestamp(n: int) -> datetime:
+    """Return datetime (in TIMEZONE) from UNIX timestamp."""
+    return datetime.fromtimestamp(n / 1000, tz=ZoneInfo(TIMEZONE))
+
+
 def get_current_local_time() -> datetime:
     """Return datetime object with current local time in TIMEZONE."""
     return datetime.now(tz=ZoneInfo(TIMEZONE))
@@ -75,6 +79,13 @@ def get_current_local_time() -> datetime:
 def get_day_start(dt: datetime) -> datetime:
     """Return start of the day of given datetime (00:00:00)."""
     return dt.replace(hour=0, minute=0, second=0, microsecond=0)
+
+
+def day_from_string(date_str: str) -> datetime:
+    """Return datetime from string in form YYYY-MM-DD (at 00:00:00 in TIMEZONE)."""
+    dt = datetime.strptime(date_str, '%Y-%m-%d')
+    dt.replace(tzinfo=ZoneInfo(TIMEZONE))
+    return dt
 
 
 if __name__ == "__main__":
