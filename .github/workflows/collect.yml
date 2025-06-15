@@ -8,7 +8,7 @@ on:
     - cron: '30 13 * * *'  # 14:30 CET
     - cron: '30 14 * * *'  # backup run
 jobs:
-  create:
+  collect:
     runs-on: ubuntu-latest
     container:
       image: python:3.13
@@ -16,6 +16,8 @@ jobs:
       contents: write
     steps:
       - uses: actions/checkout@v3
+      - name: Set up git
+        run: git config --global --add safe.directory '*'
       - name: Install dependencies
         run: pip install .
       - name: collect
