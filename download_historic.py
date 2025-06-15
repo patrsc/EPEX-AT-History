@@ -4,6 +4,7 @@ import sys
 from download import download, to_unix_timestamp, save_file, day_from_string
 from archive import compress
 
+
 def main():
     year = int(sys.argv[1])
     day_start = day_from_string(f"{year}-01-01")
