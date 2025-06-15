@@ -1,0 +1,34 @@
+name: Collect data
+on:
+  push:
+    branches:
+      - 'main'
+  schedule:
+    - cron: '30 12 * * *'  # 14:30 CEST
+    - cron: '30 13 * * *'  # 14:30 CET
+    - cron: '30 14 * * *'  # backup run
+jobs:
+  create:
+    runs-on: ubuntu-latest
+    container:
+      image: python:3.13
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install dependencies
+        run: pip install .
+      - name: collect
+        run: python download.py
+      - name: Commit new data
+        run: |
+          git config --global user.name 'Collect Bot'
+          git config --global user.email 'noreply@nubu.at'
+          git add .
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "Add next-day data"
+            git pull -r
+            git push
+          fi
