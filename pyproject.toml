@@ -1,0 +1,15 @@
+[project]
+name = "epex-at-history"
+version = "0.1.0"
+requires-python = ">=3.9"
+dependencies = [
+    "requests>=2.32.4",
+    "pydantic>=2.11.7",
+]
+
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+packages = []

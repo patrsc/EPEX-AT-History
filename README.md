@@ -7,7 +7,8 @@ Data available from 2014-01-01. Useful for statistical analysis of hourly stock 
 Inspired by [EPEX-DE-History](https://github.com/elgohr/EPEX-DE-History).
 
 Older data (currently before 2025-01-01) may be archived in the `archive` folder.
-Run the following to extract archived data into the `data` folder:
+Run the following to extract archived data into the `data` folder (after installing
+dependencies with `pip install .`):
 
 ```
 python restore_historic.py
